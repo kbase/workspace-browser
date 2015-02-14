@@ -10,22 +10,22 @@ http://workspaces.kbase.us
 ## Local Installation
 
 ```
-git clone https://github.com/kbase/workspace-browser.git oxcart
+git clone https://github.com/kbase/workspace_browser.git 
 git submodule update --init
 bower install
 ```
 
 Notes:
 - `git submodule update --init` installs some submodules in `lib/`
-- `bower install` installs some third-party (front-end) dependencies
+- `bower install` installs some third-party (client-side) dependencies
 
-Then point your favorite webserver at `oxcart`
+Then point your favorite webserver at `workspace_browser`
 
 ### Build
 
 This step creates an `index.html` with concatenated/minimized CSS/JS files (located in `build/`).
 
-From `workspace-browser`:
+From `workspace_browser`:
 
 ```
 npm install
