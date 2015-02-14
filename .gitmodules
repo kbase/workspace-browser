@@ -1,0 +1,6 @@
+[submodule "lib/ui-common"]
+	path = lib/ui-common
+	url = https://github.com/kbase/ui-common
+[submodule "lib/kbase-rpc"]
+	path = lib/kbase-rpc
+	url = https://github.com/nconrad/kbase-rpc

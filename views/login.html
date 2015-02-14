@@ -1,0 +1,65 @@
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-1">
+        <div>
+            <p id="doodle" class="text-center"><img src="assets/images/doodle.png" /></p>
+            <div style="padding-left: 30px">
+            <h1 style="font-size: 1.6em">Your science, your way.</h1>
+            <p>Build narratives that capture your analyses, including rich annotations, visualization widgets, reusable workflows, and custom scripts. Share your work and your data with colleagues. Follow the field through the people, organisms, and projects that matter to you. </p>
+            <p>Building narratives not your style? You can still work with KBase tools via <a href="http://www.kbase.us/services/docs/invocation/Iris/">IRIS</a>, our web-based command-line interface, or access your workspaces with the <a href="/functional-site/#/ws/">Workspace Browser</a>.</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4 col-md-offset-1" >
+        <form id="login-form" class="login-form well" ng-hide="auth.isAuthenticated()" >
+            <div>
+                <legend>Please sign in</legend>
+                <p id="login_error" class="text-danger"></p>
+
+                <div class="form-group">
+                    <label for="kbase_username">Username:</label>
+                    <input name="kbase_username"
+                           type="text"
+                           placeholder="username"
+                           class="form-control"
+                           tabindex="1"
+                           ng-model="user" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="kbase_password">Password:
+                        <a target="_blank" href="http://gologin.kbase.us/ResetPassword" tabindex="4">
+                            Forgot password?
+                        </a>
+                    </label>
+
+                    <input type="password"
+                           placeholder="password"
+                           class="form-control"
+                           tabindex="2"
+                           ng-model="pass" required>
+                </div>
+
+                <button ng-click="loginUser(user, pass)" type="submit" class="btn btn-primary" tabindex="3">Sign In</button>
+                <img ng-if="loading" src="./assets/images/ajax-loader.gif" />
+
+            </div>
+            <br>
+            <span>New to KBase? <a target="_blank" href="http://gologin.kbase.us/Signup">Register now</a></span>
+        </form>
+
+        <form class="login-form well" ng-show="auth.isAuthenticated()">
+            <div>
+                <legend>Signed in as
+                    <span style="white-space:nowrap">{{ username }}</span>
+                </legend>
+                <p>
+                    You can access your narratives, workspaces, or upload data using the buttons at the top. The search bar will allow you to find data in KBase.
+                </p>
+                <button class="btn btn-primary" ng-click="logout()">Sign Out</button>
+            </div>
+        </form>
+
+    </div>
+</div>
