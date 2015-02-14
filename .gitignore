@@ -1,0 +1,5 @@
+node_modules/
+components/
+.tmp/
+build/
+index.html
