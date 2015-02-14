@@ -47,8 +47,9 @@ Notes:
 ## Author(s)
 
 Neal Conrad <nconrad@anl.gov>
+
 & The [Kbase](https://kbase.us) Team
 
 ## License
 
-Released under [the MIT license](https://github.com/nconrad/ng-browse).
+Released under [the MIT license](https://github.com/kbase/workspace_browser).
