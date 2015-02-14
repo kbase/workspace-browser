@@ -10,12 +10,13 @@ http://workspaces.kbase.us
 ## Local Installation
 
 ```
-git clone --recursive https://github.com/kbase/workspace-browser.git oxcart
+git clone https://github.com/kbase/workspace-browser.git oxcart
+git submodule update --init
 bower install
 ```
 
 Notes:
-- The `--recursive` flag installs some submodules in `lib/`
+- `git submodule update --init` installs some submodules in `lib/`
 - `bower install` installs some third-party (front-end) dependencies
 
 Then point your favorite webserver at `oxcart`
