@@ -12,7 +12,6 @@ function($scope, $state, $window, auth) {
         $scope.loading = true;
         auth.login(user, pass)
             .success(function(data) {
-
                 // see https://github.com/angular-ui/ui-router/issues/582
                 $state.transitionTo('ws', {}, {reload: true, inherit: true, notify: false})
                       .then(function() {
@@ -22,13 +21,8 @@ function($scope, $state, $window, auth) {
                       });
 
             }).error(function(e, status){
-                console.log('error', e)
                 $scope.loading = false;
-                if (status == 401) {
-                    $scope.inValid = true;
-                } else {
-                    $scope.failMsg = "Could not reach authentication service: "+e.error_msg;
-                }
+                $scope.failMsg = e.error_msg;
             })
     }
 

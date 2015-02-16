@@ -15,7 +15,9 @@
         <form id="login-form" class="login-form well" ng-hide="auth.isAuthenticated()" >
             <div>
                 <legend>Please sign in</legend>
-                <p id="login_error" class="text-danger"></p>
+                <p ng-if="failMsg" class="text-danger">
+                    {{failMsg}}
+                </p>
 
                 <div class="form-group">
                     <label for="kbase_username">Username:</label>
