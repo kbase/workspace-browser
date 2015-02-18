@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/kbase/workspace-browser",
   "dependencies": {
-    "express": "^4.11.2"
+    "express": "^4.11.2",
+    "grunt-cli": "^0.1.13"
   }
 }
