@@ -35,7 +35,7 @@ function($compile, $state, $stateParams, modals, auth, $http, $q) {
                 var table = $('<table class="table table-bordered table-hover ws-selector-table">')
                 $('#select-box').append(table)
 
-                workspaces = []
+                workspaces = [];
 
                 var prom = $http.rpc('ws', 'list_workspace_info', {});
                 $('.select-box').loading();
@@ -45,8 +45,9 @@ function($compile, $state, $stateParams, modals, auth, $http, $q) {
                     var sorted_ws = [];
                     var owned_ws = [];
                     for (var i in data) {
-                        var ws = data[i];
-                        var user = ws[2];
+                        var ws = data[i],
+                            user = ws[2],
+                            meta = ws[8];
 
                         // hide search workspaces
                         if (user == "kbasesearch") continue;
@@ -72,26 +73,37 @@ function($compile, $state, $stateParams, modals, auth, $http, $q) {
 
                     var data = owned_ws.concat(sorted_ws);
                     for (var i in data) {
-                        var ws = data[i];
-                        var name = ws[1];
-                        var user = ws[2];
-                        var obj_count = ws[4];
-                        var perm = ws[5];
-                        var global_perm = ws[6];
-                        //var short_ws = ws[0].slice(0,12) + '...'
+                        var ws = data[i],
+                            name = ws[1],
+                            user = ws[2],
+                            obj_count = ws[4],
+                            perm = ws[5],
+                            global_perm = ws[6],
+                            meta = ws[8];
 
-                        var selector = $('<tr data-perm="'+perm+
-                                            '" data-global="'+global_perm+
-                                            '" data-owner="'+user+'"><td class="select-ws table-ellipsis '
-                                                +($stateParams.ws == name ? 'selected-ws ' : '' )+
-                                            '" data-ws="'+name+'">'+
-                                            '<span class="badge">'+obj_count+'</span> '+
-                                            '<span> '+(user == auth.user ? '<b>'+name+'</b>': name)+'</span></td></tr>');
+                        var isNarrative = ('narrative' in meta ? true : false);
+
+                        var selector = $('<tr class="'+(isNarrative ? 'hide' : '')+
+                                           '" data-perm="'+perm+
+                                           '" data-global="'+global_perm+
+                                           '" data-owner="'+user+'">'+
+                                           '<td class="select-ws table-ellipsis '
+                                                 +($stateParams.ws == name ? 'selected-ws ' : '' )+
+                                               '" data-ws="'+name+
+                                               '" data-is-narrative="'+isNarrative+'">'+
+                                               '<span class="badge">'+obj_count+'</span> '+
+                                               (isNarrative ? '<span class="label label-primary">Narrative</span>': '')+
+                                               '<span> '+
+                                                    (user == auth.user ? '<b>'+name+'</b>': name)+
+                                               '</span>'+
+                                           '</td>'+
+                                         '</tr>');
 
 
-                        selector.find('td').append('<button type="button" class="btn \
-                                            btn-default btn-xs btn-ws-settings hide" data-ws="'+name+'">\
-                                            <div class="glyphicon glyphicon-cog"></div></button>');
+                        selector.find('td').append('<button type="button"'+
+                                                           'class="btn btn-default btn-xs btn-ws-settings hide"'+
+                                                           'data-ws="'+name+'">'+
+                                                   '<div class="glyphicon glyphicon-cog"></div></button>');
 
                         // event for showing settings button
                         selector.hover(function() {
@@ -103,6 +115,8 @@ function($compile, $state, $stateParams, modals, auth, $http, $q) {
                     }
 
                     workspaces = data;
+
+
 
                     $('.scroll-pane').css('height', $(window).height()-
                         $('.ws-selector-header').height() - nav_height )
@@ -128,6 +142,7 @@ function($compile, $state, $stateParams, modals, auth, $http, $q) {
 
             function events() {
                 var filterCollapse = $('.perm-filters');
+                var filterNarratives = filterCollapse.find('#ws-filter-narrative').change(filter);
                 var filterOwner = filterCollapse.find('#ws-filter-owner').change(filter);
                 var filterAdmin = filterCollapse.find('#ws-filter-admin').change(filter);
                 var filterWrite = filterCollapse.find('#ws-filter-write').change(filter);
@@ -264,15 +279,20 @@ function($compile, $state, $stateParams, modals, auth, $http, $q) {
 
                 // function that filters when a filter is selected
                 function filter() {
+                    $('.select-box table tr').removeClass('hide') // for narratives
                     $('.select-box table tr').show();
                     $('.no-ws-alert').remove()
 
-                    //var projects_cb  = filterRead.prop('checked');
+                    var showNarratives = filterNarratives.prop('checked');
                     var owner_cb = filterOwner.prop('checked');
                     var admin_cb = filterAdmin.prop('checked');
                     var write_cb = filterWrite.prop('checked');
                     var read_cb  = filterRead.prop('checked');
 
+                    if (showNarratives)
+                        $('.select-box table tr').find('[data-is-narrative=true]').removeClass('hide')
+                    else
+                        $('.select-box table tr').find('[data-is-narrative=true]').addClass('hide')
 
                     for (var i=0; i< workspaces.length; i++) {
                         var ws = workspaces[i];
@@ -281,7 +301,8 @@ function($compile, $state, $stateParams, modals, auth, $http, $q) {
                         var obj_count = ws[4];
                         var perm = ws[5];
                         var global_perm = ws[6];
-                        var is_project = ws[10]
+                        var isNarrative = ('narrative' in ws[8]);
+
 
                         var j = i+1;
 
@@ -293,7 +314,6 @@ function($compile, $state, $stateParams, modals, auth, $http, $q) {
                         // these filters can be combined with the above
                         if (!show && read_cb && global_perm === 'r') show = true;
                         if (show && owner_cb && user != auth.user) show = false;
-                        //if (show && projects_cb && is_project == false) show = false;
 
                         if (!show) {
                             $('.select-box table tr:nth-child('+j+')').hide();
@@ -933,7 +953,6 @@ function($compile, $state, $stateParams, modals, auth, $http, $q) {
             }
 
             function showObjectInfo(ws, id) {
-                console.log('ws/id', ws, id)
                 var info_modal = $('<div>').kbasePrompt({
                         title : id,
                         modalClass : '',
