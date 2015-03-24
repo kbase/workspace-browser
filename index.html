@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html ng-app="landing-pages" lang="en">
+    <head>
+        <title>KBase Workspaces</title>
+        <link rel="icon" type="image/x-icon" href="assets/img/KBase_favicon.ico">
+
+        <link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="assets/css/kb-ui.css" />
+        <link rel="stylesheet" href="assets/css/ws-browser.css" />
+
+        <!-- build:css build/style.css -->
+        <link rel="stylesheet" href="lib/datatables-bootstrap/dataTables.bootstrap.css" />
+        <link rel="stylesheet" href="assets/css/kb-visualizations.css" />
+        <link rel="stylesheet" href="assets/css/tour.css" />
+        <!-- endbuild -->
+
+        <!-- build:js build/site.js -->
+        <script src="components/jquery/dist/jquery.min.js"></script>
+        <script src="components/jquery-ui/jquery-ui.min.js"></script><!-- to be removed -->
+        <script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="components/d3/d3.min.js"></script>
+
+        <script src="components/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script src="components/datatables-colreorder/js/dataTables.colReorder.js"></script>
+        <script src="lib/datatables-bootstrap/dataTables.bootstrap.js"></script>
+
+        <script src="components/angular/angular.js"></script>
+        <script src="components/ui-router/release/angular-ui-router.js"></script>
+
+        <script src="lib/tour.js"></script>
+        <script src="lib/ui-common/src/kbwidget.js"></script>
+        <script src="lib/kbaseWSPrompt.js"></script>
+
+        <script src="app/app.js"></script>
+        <script src="config.js"></script>
+        <script src="app/services/auth.js"></script>
+        <script src="lib/kbase-rpc/kbase-rpc.js"></script>
+        <script src="app/services/wsModals.js"></script>
+        <script src="app/services/uiTools.js"></script>
+        <script src="app/directives/ws.js"></script>
+        <script src="app/controllers.js"></script>
+        <script src="app/kbapi.js"></script>
+        <!-- endbuild -->
+    </head>
+
+    <body>
+        <div id="wrap">
+            <div id="content">
+
+                <div class="nav navbar-kbase navbar-fixed-top nav-collapse" ng-controller="Login">
+                    <div class="navbar-header">
+                        <a href="http://www.kbase.us" class="pull-left">
+                            <img id="logo" src="assets/img/kbase_logo.png" width="46"/>
+                        </a>
+                        <a class="navbar-brand" ui-sref="ws">Workspaces</a>
+                    </div>
+
+                    <div class="collapse navbar-collapse navbar-right">
+                        <li ng-if="auth.isAuthenticated()" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">{{auth.user}}
+                                <i class="fa fa-caret-down"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!--
+                                <li>
+                                    <a ui-sref="user">
+                                        <i class="fa fa-user fa-fw"></i> User Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="userSettings">
+                                        <i class="fa fa-gear fa-fw"></i> Settings
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                -->
+                                <li>
+                                    <a ng-click="logout()" >
+                                        <i class="fa fa-sign-out fa-fw"></i> Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li ng-show="!auth.isAuthenticated() && !$state.includes('login')">
+                            <a class="dropdown-toggle" ui-sref="login">
+                                Sign In
+                            </a>
+                        </li>
+                    </div>
+                </div>
+
+                <div id="app" ui-view></div>
+
+            </div>
+
+            <div id="footer" class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 main">
+                <ul>
+                    <li><a href="//kbase.us/science/what-is-kbase/" target="_blank">About KBase</a></li>
+                    <li><a href="//kbase.us/user-support/documentation/" target="_blank">Documentation</a></li>
+                    <li><a href="//kbase.us/about/terms-and-conditions" target="_blank">Terms and Conditions</a></li>
+                    <li><a href="//kbase.us/contact-us/" target="_blank">Contact Us</a></li>
+                    <li>
+                        <a href="http://science.energy.gov/" target="_blank">
+                            <img class="pull-right" src="./assets/images/doe_sc_logo.png" />
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+
+    </body>
+
+</html>
+
