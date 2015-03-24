@@ -442,13 +442,16 @@ function($compile, $state, $stateParams, modals, auth, $http, $q) {
                 $(element).html('');
                 $(element).loading('<br>loading<br>'+ws+'...', true);
 
-                var p = $http.rpc('ws', 'list_objects', {workspaces: [ws]});
+                var p = $http.rpc('ws', 'list_objects', {workspaces: [ws], showHidden: 1});
                 var p2 = $http.rpc('ws', 'list_objects', {workspaces: [ws], showOnlyDeleted: 1});
                 $q.all([p, p2]).then(function(res){
                     var objs = res[0];
                     scope.deleted_objs = res[1];
 
+                    console.log('hidden?', objs)
+
                     $(element).rmLoading();
+
 
                     var table_ele = $('<table id="'+table_id+'" class="table table-bordered table-striped" style="width: 100%;">')
                     $(element).append(table_ele);

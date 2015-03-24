@@ -10,7 +10,7 @@ http://workspaces.kbase.us
 ## Local Installation
 
 ```
-git clone https://github.com/kbase/workspace_browser.git 
+git clone https://github.com/kbase/workspace_browser.git
 git submodule update --init
 bower install
 ```
@@ -23,7 +23,7 @@ Then point your favorite webserver at `workspace_browser`
 
 ### Build
 
-This step creates an `index.html` with concatenated/minimized CSS/JS files (located in `build/`).
+This step creates an `index.html` with concatenated/minimized CSS/JS files.
 
 From `workspace_browser`:
 

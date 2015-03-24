@@ -101,8 +101,7 @@ var app = angular.module('landing-pages',
              controller: 'CpdDetail'
          });
 
-
-
+    $urlRouterProvider.when('', '/')
 
     $urlRouterProvider.otherwise('/404/');
 
