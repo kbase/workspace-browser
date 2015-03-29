@@ -442,7 +442,7 @@ function($compile, $state, $stateParams, modals, auth, $http, $q) {
                 $(element).html('');
                 $(element).loading('<br>loading<br>'+ws+'...', true);
 
-                var p = $http.rpc('ws', 'list_objects', {workspaces: [ws], showHidden: 1});
+                var p = $http.rpc('ws', 'list_objects', {workspaces: [ws]});
                 var p2 = $http.rpc('ws', 'list_objects', {workspaces: [ws], showOnlyDeleted: 1});
                 $q.all([p, p2]).then(function(res){
                     var objs = res[0];
