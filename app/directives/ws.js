@@ -4,7 +4,8 @@
  *
  *   This file has the left hand (wsselector)
  *   and right hand (objtable) directives of the workspace
- *   browser.
+ *   browser.  In summary, it's a large mess of jquery thrown
+ *   into an angular directive as a prototype.
  *
 */
 
@@ -1625,9 +1626,3 @@ function getCols(table, title) {
 
     return cols;
 }
-
-
-
-
-
-

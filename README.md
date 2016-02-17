@@ -1,29 +1,28 @@
 
 # Workspace Browser
 
-KBase Web Application for browsing workspaces
+Just a KBase Dev Tool for browsing workspaces.  
 
 ## Website
 
-http://workspaces.kbase.us
+N/A
 
 ## Local Installation
 
 ```
-git clone https://github.com/kbase/workspace_browser.git
-git submodule update --init
+git clone --recursive https://github.com/kbase/workspace_browser.git
 bower install
 ```
 
 Notes:
-- `git submodule update --init` installs some submodules in `lib/`
+- The `--recursive` installs some submodules in `lib/`
 - `bower install` installs some third-party (client-side) dependencies
 
-Then point your favorite webserver at `workspace_browser`
+Then point your favorite web server at `workspace_browser`
 
-### Build
+### Production Build
 
-This step creates an `index.html` with concatenated/minimized CSS/JS files.
+For production, this step creates an `index.html` with concatenated/minimized CSS/JS files.
 
 From `workspace_browser`:
 

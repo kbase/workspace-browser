@@ -41,9 +41,6 @@ function($scope, $stateParams, auth) {
 
     $scope.ws = $stateParams.ws;
     $scope.type = $stateParams.type;
-
-
-
 }])
 
 .controller('KBaseTables', function($scope, $stateParams) {

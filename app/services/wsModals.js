@@ -287,12 +287,13 @@ angular.module('wsModals', [])
                     callback : function(e, $prompt) { //Fixme: yyyeeeahh.
                         $prompt.addCover();
                         $prompt.getCover().loading();
-
+                        console.log('saving')
                         var prom = savePermissions(ws_name);
                         prompt = $prompt;
 
                         // save permissions, then save description, then the global perm //fixme
-                        prom.then(function() {
+                        prom.then(function(res) {
+                            console.log('response', res)
                             // if description textarea is showing, saving description
                             var d = $('.descript-container textarea').val();
 
@@ -631,7 +632,6 @@ angular.module('wsModals', [])
                     continue;
                 }
 
-
                 var params = {
                     workspace: p_name,
                     new_permission: newPerms[new_user],
@@ -639,7 +639,7 @@ angular.module('wsModals', [])
                     //auth: USER_TOKEN
                 };
 
-                var p = $http('ws', 'set_permissions', params);
+                var p = $http.rpc('ws', 'set_permissions', params);
                 promises.push(p);
             };
 
@@ -689,7 +689,3 @@ angular.module('wsModals', [])
     }  // end manageWS
 
 }]);
-
-
-
-
